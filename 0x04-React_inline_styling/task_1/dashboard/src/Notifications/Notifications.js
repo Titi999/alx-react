@@ -27,7 +27,7 @@ class Notifications extends React.Component {
           Your notifications
         </div>
         {this.props.displayDrawer? 
-            <div className={css(notificationPanel.Notifications)}>
+            <div className={css(notificationStyles.notifications)}>
               <button style={{
                 color: '#3a3a3a',
                 fontWeight: 'bold',
@@ -81,6 +81,18 @@ class Notifications extends React.Component {
   }
 }
 
+const notificationStyles = StyleSheet.create({
+	notifications: {
+    border: '3px dotted var(--holberton-red)',
+    padding: '6px 12px',
+    position: 'absolute',
+    top: '21px',
+    right: '7px',
+    marginTop: '12px',
+    zIndex: '100',
+	}
+});
+
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: []
@@ -90,17 +102,5 @@ Notifications.propTypes = {
   displayDrawer: PropeTypes.bool,
   listNotifications: PropeTypes.arrayOf(NotificationItemShape)
 };
-
-const notificationPanel = StyleSheet.create({
-  Notifications: {
-    border: '3px dotted var(--holberton-red)',
-    padding: '6px 12px',
-    position: 'absolute',
-    top: '21px',
-    right: '7px',
-    marginTop: '12px',
-    zIndex: '100'
-  }
-});
 
 export default Notifications;
