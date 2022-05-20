@@ -1,7 +1,7 @@
 import React from 'react';
 import closeIcon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
-import PropeTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
 import { StyleSheet, css } from 'aphrodite';
 
@@ -12,9 +12,8 @@ class Notifications extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.listNotifications.length > this.props.listNotifications.length ||
-    nextProps.displayDrawer !== this.props.displayDrawer
-    );
+    return nextProps.listNotifications.length > this.props.listNotifications.length ||
+    this.props.displayDrawer != nextProps.displayDrawer;
   }
 
   markAsRead(id) {
@@ -25,7 +24,7 @@ class Notifications extends React.Component {
     return (
       <>
         {!this.props.displayDrawer ?
-          <div className={css(notificationStyles.menuItem)}>
+          <div className={css(notificationStyles.menuItem)} onClick={this.props.handleDisplayDrawer}>
             Your notifications
           </div>
         :
@@ -46,6 +45,7 @@ class Notifications extends React.Component {
             className={css(notificationStyles.button)}
             onClick={(e) => {
               console.log('Close button has been clicked');
+              this.props.handleHideDrawer();
             }}
             >
               <img src={closeIcon} alt="close icon" width="15px" />
@@ -81,18 +81,6 @@ class Notifications extends React.Component {
     );
   }
 }
-
-Notifications.propTypes = {
-	displayDrawer: PropTypes.bool,
-	listNotifications: PropTypes.arrayOf(NotificationItemShape),
-	handleDisplayDrawer: PropTypes.func,
-	handleHideDrawer: PropTypes.func,
-};
-
-Notifications.defaultProps = {
-	displayDrawer: false,
-};
-
 
 const opacityAnim = {
   '0%': { opacity: 0.5 },
@@ -152,12 +140,16 @@ const notificationStyles = StyleSheet.create({
 
 Notifications.defaultProps = {
   displayDrawer: false,
-  listNotifications: []
+  listNotifications: [],
+  handleHideDrawer: () => {console.log('empty func');},
+  handleDisplayDrawer: () => {console.log('empty func');}
 };
 
 Notifications.propTypes = {
-  displayDrawer: PropeTypes.bool,
-  listNotifications: PropeTypes.arrayOf(NotificationItemShape)
+  displayDrawer: PropTypes.bool,
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  handleHideDrawer: PropTypes.func,
+  handleDisplayDrawer: PropTypes.func
 };
 
 export default Notifications;

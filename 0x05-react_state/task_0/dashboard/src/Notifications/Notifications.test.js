@@ -129,46 +129,24 @@ describe("Testing the notification class Component re-rendering", () => {
     expect(wrapper.find("NotificationItem").at(1).props().value).toEqual("New course available2");
     expect(wrapper.find("NotificationItem").length).toBe(4);
   });
+});
 
-  it('should call handleDisplayDrawer when menu item clicked', () => {
-		const listNotifications = [
-			{ id: 1, type: 'default', value: 'New course available' },
-			{ id: 2, type: 'urgent', value: 'New resume available' },
-			{ id: 3, type: 'default', html: getLatestNotification() },
-		];
-		const mockFn = jest.fn();
-		const wrapper = shallow(
-			<Notifications
-				listNotifications={listNotifications}
-				handleDisplayDrawer={mockFn}
-			/>
-		);
-		const spy = jest.spyOn(wrapper.instance().props, 'handleDisplayDrawer');
+describe("Testing Notifications Component Drawer Display handlers ", () => {
+  let wrapper;
 
-		wrapper.find('.menuItem_1ba569s-o_O-hover_1f7q9uc').simulate('click');
-		expect(spy).toBeCalled();
-		spy.mockRestore();
-	});
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+    wrapper = mount(<Notifications handleDisplayDrawer={jest.fn()} handleHideDrawer={jest.fn()}/>);
+  });
 
-	it('should call handleHideDrawer when close button is clicked', () => {
-		const listNotifications = [
-			{ id: 1, type: 'default', value: 'New course available' },
-			{ id: 2, type: 'urgent', value: 'New resume available' },
-			{ id: 3, type: 'default', html: getLatestNotification() },
-		];
-		const mockFn = jest.fn();
-		const wrapper = shallow(
-			<Notifications
-				displayDrawer={true}
-				listNotifications={listNotifications}
-				handleHideDrawer={mockFn}
-			/>
-		);
-		const spy = jest.spyOn(wrapper.instance().props, 'handleHideDrawer');
-		wrapper.find('button').simulate('click');
+  it("verify that clicking on the menu item calls handleDisplayDrawer", () => {
+    (wrapper.find('div').at(0)).simulate('click');
+    expect(wrapper.props().handleDisplayDrawer).toBeCalled();
+  });
 
-		expect(spy).toBeCalled();
-		spy.mockRestore();
-	});
-  
+  it("verify that clicking on the button calls handleHideDrawer", () => {
+    wrapper.setProps({displayDrawer: true});
+    (wrapper.find('button').at(0)).simulate('click');
+    expect(wrapper.props().handleHideDrawer).toBeCalled();
+  });
 });

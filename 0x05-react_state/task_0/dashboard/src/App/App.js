@@ -15,9 +15,6 @@ class App extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state = { displayDrawer: false };
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-		this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.isLoggedIn = props.isLoggedIn;
     this.logOut = props.logOut;
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -32,7 +29,18 @@ class App extends React.Component {
       {id: 2, value: "New resume available", type: "urgent"},
       {id: 3, html: {__html: getLatestNotification()}, type: "urgent"},
     ];
+    this.state = { displayDrawer: false };
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+		this.handleHideDrawer = this.handleHideDrawer.bind(this);
   }
+
+  handleDisplayDrawer() {
+		this.setState({ displayDrawer: true });
+	}
+
+	handleHideDrawer() {
+		this.setState({ displayDrawer: false });
+	}
 
   handleKeyDown(e) {
     if (e.ctrlKey && e.key === 'h') {
@@ -49,14 +57,6 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
-
-  handleDisplayDrawer() {
-		this.setState({ displayDrawer: true });
-	}
-
-	handleHideDrawer() {
-		this.setState({ displayDrawer: false });
-	}
 
   render () {
     return (
