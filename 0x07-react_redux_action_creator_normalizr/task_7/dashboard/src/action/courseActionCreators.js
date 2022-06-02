@@ -6,6 +6,7 @@ export function selectCourse(index) {
 		index: index,
 	};
 }
+export const boundSelectCourse = (index) => dispatch(selectCourse(index));
 
 export function unSelectCourse(index) {
 	return {
@@ -13,7 +14,4 @@ export function unSelectCourse(index) {
 		index: index,
 	};
 }
-
-
-const boundSelectCourse = selectCourse.bind(SELECT_COURSE);
-const boundUnSelectCOurse= selectCourse.bind(UNSELECT_COURSE);
+export const boundUnSelectCourse = (index) => dispatch(unSelectCourse(index));

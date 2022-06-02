@@ -6,14 +6,15 @@ export const login = (email, password) => {
         user : { email, password }
     };
 }
+export const boundLogin = (email, password) => dispatch(login(email, password));
+
 
 export const logout = () => ({ type: LOGOUT });
+export const boundLogout = () => dispatch(logout());
 
 export const displayNotificationDrawer = () => ({ type: DISPLAY_NOTIFICATION_DRAWER });
+export const boundDisplayNotificationDrawer = () => dispatch(displayNotificationDrawer());
+
 
 export const hideNotificationDrawer = () => ({ type: HIDE_NOTIFICATION_DRAWER });
-
-const boundLogin = login.bind(LOGIN);
-const boundLogout = logout.bind(LOGOUT);
-const boundDisplayNotificationDrawer = displayNotificationDrawer.bind(DISPLAY_NOTIFICATION_DRAWER);
-const boundHideNotificationDrawer = hideNotificationDrawer.bind(HIDE_NOTIFICATION_DRAWER);
+export const boundHideNotificationDrawer = () => dispatch(hideNotificationDrawer());
